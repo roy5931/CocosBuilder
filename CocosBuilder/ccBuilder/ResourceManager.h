@@ -27,7 +27,7 @@
 #import "SCEvent.h"
 
 //nuannuan
-#define kCCBMaxTrackedDirectories 5000
+#define kCCBMaxTrackedDirectories 65535
 
 enum
 {

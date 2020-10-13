@@ -144,6 +144,8 @@
 		A09AB6BC14E9935F009C8B91 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A09AB6AD14E9935F009C8B91 /* vec3.c */; };
 		A09AB6BD14E9935F009C8B91 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A09AB6AE14E9935F009C8B91 /* vec4.c */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
+		A5E394DE2242AC6500BFD61E /* CCBPublishLuaBindingScript.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E394DD2242AC6500BFD61E /* CCBPublishLuaBindingScript.m */; };
+		A5F719C82243F7CE00FB9EEA /* luaTemplate in Resources */ = {isa = PBXBuildFile; fileRef = A5F719C42243F7CE00FB9EEA /* luaTemplate */; };
 		A77EF590171FD30E00451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
 		A77EF594171FD3B200451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
 		C9842AC61F17046BB0DCF2CC /* Pods_CocosBuilder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE04728A84FF06385C9D6729 /* Pods_CocosBuilder.framework */; };
@@ -1065,6 +1067,9 @@
 		A09AB6AD14E9935F009C8B91 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		A09AB6AE14E9935F009C8B91 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
+		A5E394DC2242AC6500BFD61E /* CCBPublishLuaBindingScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPublishLuaBindingScript.h; sourceTree = "<group>"; };
+		A5E394DD2242AC6500BFD61E /* CCBPublishLuaBindingScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPublishLuaBindingScript.m; sourceTree = "<group>"; };
+		A5F719C42243F7CE00FB9EEA /* luaTemplate */ = {isa = PBXFileReference; lastKnownFileType = folder; path = luaTemplate; sourceTree = "<group>"; };
 		A77EF58F171FD30E00451DA4 /* cwebp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = cwebp; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
@@ -2379,6 +2384,7 @@
 		7789ACEB133AB6A700CEFCC7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A5F719C42243F7CE00FB9EEA /* luaTemplate */,
 				E373BF1017189D2E00D71602 /* autoCompleteDefinitions */,
 				E390C780170A371E003E9E92 /* version */,
 				E334742E169DC9E0000737CC /* jsdoc */,
@@ -2858,6 +2864,8 @@
 				E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */,
 				835DAF3F17156161003A2F7B /* CCBHTTPServer.h */,
 				835DAF4017156161003A2F7B /* CCBHTTPServer.m */,
+				A5E394DC2242AC6500BFD61E /* CCBPublishLuaBindingScript.h */,
+				A5E394DD2242AC6500BFD61E /* CCBPublishLuaBindingScript.m */,
 			);
 			name = Publishing;
 			sourceTree = "<group>";
@@ -4313,6 +4321,8 @@
 				E35A146715B0A54A00C9AA15 /* PlayerConsoleWindow.xib in Resources */,
 				E3E2704815B18CF500287470 /* TB_play.png in Resources */,
 				E3E2704915B18CF500287470 /* TB_stop.png in Resources */,
+				A5F719C82243F7CE00FB9EEA /* luaTemplate in Resources */,
+				2D80DD011A1DE5B4005AAFFE /* (null) in Resources */,
 				E3E2704B15B1904400287470 /* toolbar-bottom.png in Resources */,
 				E3F59CCE15B5B7560015523B /* PlayerConsolePairingWindow.xib in Resources */,
 				E326EFB615C84123006D6CE6 /* seq-endmarker.png in Resources */,
@@ -4729,6 +4739,7 @@
 				E33BC1B81510E4B6009AE29A /* NodeGraphPropertySetter.m in Sources */,
 				E3C6510A151A65ED00D639C0 /* InspectorString.m in Sources */,
 				E3C6512B151C7E3700D639C0 /* InspectorBlockCCControl.m in Sources */,
+				A5E394DE2242AC6500BFD61E /* CCBPublishLuaBindingScript.m in Sources */,
 				E383BF6B152478940032F371 /* CCScrollView.m in Sources */,
 				E36F3C3D152C756D00AAD805 /* NSString+RelativePath.m in Sources */,
 				E34E5D6615357CF2000201FB /* RulersLayer.m in Sources */,

@@ -41,6 +41,9 @@
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 
+/* Jennal Added */
+#import "CCBPublishLuaBindingScript.h"
+
 @implementation CCBPublisher
 
 @synthesize publishFormat;
@@ -160,6 +163,23 @@
     {
         [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish ccb-file. Failed to write file: %@",dstFile] isFatal:NO];
         return YES;
+    }
+    
+    //Jennal Added: Publish lua script
+    if (projectSettings.publishLuaScript && [[doc objectForKey:@"jsControlled"] boolValue]) {
+        NSString* file = [CCBPublishLuaBindingScript getClassName:doc];//[[dstFile lastPathComponent] stringByDeletingPathExtension];
+        NSString* luaContent = [CCBPublishLuaBindingScript exportString:doc ccbiName:file];
+        if ( ! luaContent) {
+            return YES;
+        }
+        
+        NSString* folder = [CCBPublishLuaBindingScript getFolders:doc inDir:luaDir];
+        NSString* luaFile = [NSString stringWithFormat:@"%@/%@.lua", folder, file];
+        success = [luaContent writeToFile:luaFile atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        if ( ! success) {
+            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish lua-file. Failed to write file: %@", luaFile] isFatal:NO];
+            return YES;
+        }
     }
     
     return YES;
@@ -363,6 +383,17 @@
         if (!createdDirs)
         {
             [warnings addWarningWithDescription:@"Failed to create output directory %@" isFatal:YES];
+            return NO;
+        }
+    }
+    
+    // Jennal Added: Create lua directory
+    if (projectSettings.publishLuaScript)
+    {
+        BOOL createdDirs = [fm createDirectoryAtPath:luaDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+        if (!createdDirs)
+        {
+            [warnings addWarningWithDescription:@"Failed to create lua directory %@" isFatal:YES];
             return NO;
         }
     }
@@ -813,6 +844,7 @@
 - (BOOL) publishAllToDirectory:(NSString*)dir
 {
     outputDir = dir;
+    luaDir = [outputDir stringByAppendingPathComponent:@"lua"];
     
     publishedResources = [NSMutableSet set];
     renamedFiles = [NSMutableDictionary dictionary];

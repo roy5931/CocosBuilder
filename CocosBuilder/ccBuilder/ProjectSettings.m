@@ -186,6 +186,9 @@
     self.publishResolutionHTML5_height = 320;
     self.publishResolutionHTML5_scale = 1;
     
+    //Jennal Added
+    self.publishLuaScript = NO;
+    
     breakpoints = [[NSMutableDictionary dictionary] retain];
     
     generatedSpriteSheets = [[NSMutableDictionary dictionary] retain];

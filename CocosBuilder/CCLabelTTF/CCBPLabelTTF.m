@@ -26,6 +26,15 @@
 
 @implementation CCBPLabelTTF
 
+@synthesize outlineEnabled;
+@synthesize outlineSize;
+@synthesize outlineColor;
+@synthesize shadowEnabled;
+@synthesize shadowColor;
+@synthesize shadowOffset;
+@synthesize shadowBlur;
+@synthesize isSystemFont;
+
 - (void) setAlignment:(int)alignment
 {
     self.horizontalAlignment = alignment;

@@ -28,5 +28,13 @@
 
 // Add property to maintain backwards compatibility
 @property (nonatomic,assign) int alignment;
+@property (nonatomic,assign) BOOL outlineEnabled;
+@property (nonatomic,assign) int outlineSize;
+@property (nonatomic,assign) ccColor3B outlineColor;
+@property (nonatomic,assign) BOOL shadowEnabled;
+@property (nonatomic,assign) ccColor3B shadowColor;
+@property (nonatomic,assign) CGSize shadowOffset;
+@property (nonatomic,assign) int shadowBlur;
+@property (nonatomic,assign) BOOL isSystemFont;
 
 @end
