@@ -48,4 +48,7 @@
     return YES;
 }
 
+- (void)keyDown:(NSEvent *)theEvent {
+    [self interpretKeyEvents:[NSArray arrayWithObject:theEvent]];
+}
 @end

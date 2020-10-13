@@ -62,8 +62,8 @@
     
     fragaria = [[MGSFragaria alloc] init];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:MGSPrefsAutocompleteSuggestAutomatically];	
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:MGSPrefsLineWrapNewDocuments];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:MGSFragariaPrefsAutocompleteSuggestAutomatically];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:MGSFragariaPrefsLineWrapNewDocuments];
     
     [fragaria setObject:[NSNumber numberWithBool:YES] forKey:MGSFOIsSyntaxColoured];
     [fragaria setObject:[NSNumber numberWithBool:YES] forKey:MGSFOShowLineNumberGutter];
@@ -214,8 +214,8 @@
     // Update gutter view
     NSScrollView* gutterScrollView = [fragaria.docSpec valueForKey:@"firstGutterScrollView"];
     SMLGutterTextView* gutter = [gutterScrollView documentView];
-    gutter.syntaxErrors = errors;
-    [gutter updateSyntaxErrors];
+//    gutter.syntaxErrors = errors;
+//    [gutter updateSyntaxErrors];
     
     // Update syntax colors
     SMLSyntaxColouring* syntaxColouring = [fragaria.docSpec valueForKey:ro_MGSFOSyntaxColouring];

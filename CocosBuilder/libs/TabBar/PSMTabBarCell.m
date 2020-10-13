@@ -22,7 +22,7 @@
 #pragma mark Creation/Destruction
 - (id)initWithControlView:(PSMTabBarControl *)controlView {
 	if((self = [super init])) {
-		_controlView = controlView;
+        [self setControlView:controlView];
 		_closeButtonTrackingTag = 0;
 		_cellTrackingTag = 0;
 		_closeButtonOver = NO;
@@ -42,7 +42,7 @@
 
 - (id)initPlaceholderWithFrame:(NSRect)frame expanded:(BOOL)value inControlView:(PSMTabBarControl *)controlView {
 	if((self = [super init])) {
-		_controlView = controlView;
+        [self setControlView:controlView];
 		_isPlaceholder = YES;
 		if(!value) {
 			if([controlView orientation] == PSMTabBarHorizontalOrientation) {
@@ -85,12 +85,14 @@
 #pragma mark Accessors
 
 - (id)controlView {
-	return _controlView;
+//	return _controlView;
+    return [super controlView];
 }
 
 - (void)setControlView:(id)view {
 	// no retain release pattern, as this simply switches a tab to another view.
 	_controlView = view;
+    [super setControlView:view];
 }
 
 - (NSTrackingRectTag)closeButtonTrackingTag {

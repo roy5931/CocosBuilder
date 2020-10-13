@@ -166,8 +166,13 @@
         else
         {
             // Display warning!
-            NSAlert* alert = [NSAlert alertWithMessageText:@"Missing Resolution" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You need to have at least one resolution enabled to create a new document."];
-            [alert beginSheetModalForWindow:[self window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
+            NSAlert *alert = [[[NSAlert alloc]init]autorelease];
+            alert.messageText = @"Missing Resolution";
+            alert.informativeText = @"You need to have at least one resolution enabled to create a new document.";
+            [alert addButtonWithTitle:@"OK"];
+            [alert beginSheetModalForWindow:[self window] completionHandler:NULL];
+//            NSAlert* alert = [NSAlert alertWithMessageText:@"Missing Resolution" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You need to have at least one resolution enabled to create a new document."];
+//            [alert beginSheetModalForWindow:[self window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
         }
     }
 }

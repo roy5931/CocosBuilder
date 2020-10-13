@@ -32,6 +32,7 @@
 @class CocosBuilderAppDelegate;
 @class SequencerSequence;
 @class SequencerScrubberSelectionView;
+@class SequencerTimelineView;
 @class SequencerKeyframe;
 
 @interface SequencerHandler : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
@@ -44,6 +45,7 @@
     SequencerSequence* currentSequence;
     //NSMutableArray* sequences;
     SequencerScrubberSelectionView* scrubberSelectionView;
+    SequencerTimelineView* timelineView;
     NSTextField* timeDisplay;
     NSSlider* timeScaleSlider;
     NSScroller* scroller;
@@ -56,6 +58,7 @@
 
 @property (nonatomic,retain) SequencerSequence* currentSequence;
 @property (nonatomic,retain) SequencerScrubberSelectionView* scrubberSelectionView;
+@property (nonatomic,retain) SequencerTimelineView* timelineView;
 @property (nonatomic,retain) NSTextField* timeDisplay;
 @property (nonatomic,retain) NSSlider* timeScaleSlider;
 @property (nonatomic,retain) NSScroller* scroller;

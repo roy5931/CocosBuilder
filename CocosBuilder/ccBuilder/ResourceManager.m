@@ -121,7 +121,16 @@
 {
     if (type == kCCBResTypeImage)
     {
-        NSImage* img = [[[NSImage alloc] initWithContentsOfFile:filePath] autorelease];
+        NSString* fileName = [filePath lastPathComponent];
+        NSString* dirPath = [filePath stringByDeletingLastPathComponent];
+        
+        NSString* autoPath = [[dirPath stringByAppendingPathComponent:@"resources-auto"] stringByAppendingPathComponent:fileName];
+        
+        NSImage* img = [[[NSImage alloc] initWithContentsOfFile:autoPath] autorelease];
+        if (!img)
+        {
+            img = [[[NSImage alloc] initWithContentsOfFile:filePath] autorelease];
+        }
         return img;
     }
     
@@ -392,16 +401,16 @@
 
 - (BOOL) isResolutionDependentFile: (NSString*) file
 {
-    if ([[file pathExtension] isEqualToString:@"ccb"]) return NO;
-    
-    NSString* fileNoExt = [file stringByDeletingPathExtension];
-    
-    NSArray* resIndependentExts = [self resIndependentExts];
-    
-    for (NSString* ext in resIndependentExts)
-    {
-        if ([fileNoExt hasSuffix:ext]) return YES;
-    }
+//    if ([[file pathExtension] isEqualToString:@"ccb"]) return NO;
+//
+//    NSString* fileNoExt = [file stringByDeletingPathExtension];
+//
+//    NSArray* resIndependentExts = [self resIndependentExts];
+//
+//    for (NSString* ext in resIndependentExts)
+//    {
+//        if ([fileNoExt hasSuffix:ext]) return YES;
+//    }
     
     return NO;
 }
@@ -417,22 +426,22 @@
     if (isDirectory)
     {
         // Hide resolution directories
-        if ([[self resIndependentDirs] containsObject:[file lastPathComponent]])
-        {
-            return kCCBResTypeNone;
-        }
-        else
-        {
+//        if ([[self resIndependentDirs] containsObject:[file lastPathComponent]])
+//        {
+//            return kCCBResTypeNone;
+//        }
+//        else
+//        {
             return kCCBResTypeDirectory;
-        }
+//        }
     }
     //else if ([[file stringByDeletingPathExtension] hasSuffix:@"-hd"]
     //         || [[file stringByDeletingPathExtension] hasSuffix:@"@2x"])
-    else if ([self isResolutionDependentFile:file])
-    {
-        // Ignore -hd files
-        return kCCBResTypeNone;
-    }
+//    else if ([self isResolutionDependentFile:file])
+//    {
+//        // Ignore -hd files
+//        return kCCBResTypeNone;
+//    }
     else if ([ext isEqualToString:@"png"]
         || [ext isEqualToString:@"jpg"]
         || [ext isEqualToString:@"jpeg"])
@@ -498,19 +507,19 @@
     NSFileManager* fm = [NSFileManager defaultManager];
     RMDirectory* dir = [directories objectForKey:path];
     
-    NSArray* resolutionDirs = [self resIndependentDirs];
+//    NSArray* resolutionDirs = [self resIndependentDirs];
     
     // Get files from default directory
     NSMutableSet* files = [NSMutableSet setWithArray:[fm contentsOfDirectoryAtPath:path error:NULL]];
     
-    for (NSString* resolutionExt in resolutionDirs)
-    {
-        NSString* resolutionDir = [path stringByAppendingPathComponent:resolutionExt];
-        BOOL isDir = NO;
-        if (![fm fileExistsAtPath:resolutionDir isDirectory:&isDir] && isDir) continue;
-        
-        [files addObjectsFromArray:[fm contentsOfDirectoryAtPath:resolutionDir error:NULL]];
-    }
+//    for (NSString* resolutionExt in resolutionDirs)
+//    {
+//        NSString* resolutionDir = [path stringByAppendingPathComponent:resolutionExt];
+//        BOOL isDir = NO;
+//        if (![fm fileExistsAtPath:resolutionDir isDirectory:&isDir] && isDir) continue;
+//
+//        [files addObjectsFromArray:[fm contentsOfDirectoryAtPath:resolutionDir error:NULL]];
+//    }
     
     NSMutableDictionary* resources = dir.resources;
     
@@ -601,7 +610,7 @@
             // Check if it is a directory
             if (res.type == kCCBResTypeDirectory)
             {
-                [self addDirectory:file];
+                [self addDirectory:file watch:NO];
                 res.data = [directories objectForKey:file];
             }
             
@@ -714,6 +723,11 @@
 
 - (void) addDirectory:(NSString *)dirPath
 {
+    [self addDirectory:dirPath watch:YES];
+}
+
+- (void) addDirectory:(NSString *)dirPath watch:(BOOL)watch
+{
     if ([directories count] > kCCBMaxTrackedDirectories)
     {
         tooManyDirectoriesAdded = YES;
@@ -733,7 +747,9 @@
         dir.dirPath = dirPath;
         [directories setObject:dir forKey:dirPath];
         
-        [self updatedWatchedPaths];
+        if (watch) {
+            [self updatedWatchedPaths];
+        }
     }
     
     [self updateResourcesForPath:dirPath];

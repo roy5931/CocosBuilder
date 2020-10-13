@@ -45,6 +45,18 @@ enum
     kCCBKeyframeEasingBackIn,
     kCCBKeyframeEasingBackOut,
     kCCBKeyframeEasingBackInOut,
+    
+    kCCBKeyframeEasingSinIn,
+    kCCBKeyframeEasingSinOut,
+    kCCBKeyframeEasingSinInOut,
+    
+    kCCBKeyframeEasingExpoIn,
+    kCCBKeyframeEasingExpoOut,
+    kCCBKeyframeEasingExpoInOut,
+    
+    kCCBKeyframeEasingCircIn,
+    kCCBKeyframeEasingCircOut,
+    kCCBKeyframeEasingCircInOut,
 };
 
 @interface SequencerKeyframeEasing : NSObject

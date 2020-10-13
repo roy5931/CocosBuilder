@@ -39,15 +39,14 @@
     if (self.controlView == self.controlView.window.firstResponder)
     {
         // Is being edited
-        
-        //if ([self isHighlighted])
-        //{
-            //return [NSColor whiteColor];
-        //}
-        //else
-        //{
+        if ([self isHighlighted] && @available(macOS 10.14, *) && self.controlView.effectiveAppearance.name == NSAppearanceNameDarkAqua)
+        {
+            return [NSColor whiteColor];
+        }
+        else
+        {
             return [NSColor blackColor];
-        //}
+        }
     }
     else if ([self isHighlighted])
     {

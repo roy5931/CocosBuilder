@@ -513,7 +513,8 @@
                 NSDate* dstDate = [CCBFileUtil modificationDateForFile:dstFile];
                 
                 //if (![fm fileExistsAtPath:dstFile] || [self srcFile:filePath isNewerThanDstFile:dstFile])
-                if (![srcDate isEqualToDate:dstDate])
+                NSTimeInterval time = [srcDate timeIntervalSinceDate:dstDate];
+                if (![fm fileExistsAtPath:dstFile] || time > 0.01)
                 {
                     [ad modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Publishing %@...", fileName]];
                     

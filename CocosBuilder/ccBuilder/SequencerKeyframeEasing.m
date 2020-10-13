@@ -208,6 +208,51 @@
             t = t - 2;
             return (t * t * ((overshoot + 1) * t + overshoot)) / 2 + 1;
         }
+    }else if (type == kCCBKeyframeEasingSinIn)
+    {
+        return sinf((t - 1) * M_PI_2) + 1;
+    }
+    else if (type == kCCBKeyframeEasingSinOut)
+    {
+        return sinf(t * M_PI_2);
+    }else if (type == kCCBKeyframeEasingSinInOut)
+    {
+        return 0.5 * (1 - cosf(t * M_PI));
+    }
+    else if (type == kCCBKeyframeEasingExpoIn)
+    {
+        return (t==0) ? t : powf(2, 10 * (t - 1));
+    }
+    else if (type == kCCBKeyframeEasingExpoOut)
+    {
+        return (t==1) ? t : -powf(2, -10 * t);
+    }else if (type == kCCBKeyframeEasingExpoInOut)
+    {
+        if(t < 0.5)
+        {
+            return 0.5 * powf(2, (20 * t) - 10);
+        }
+        else
+        {
+            return -0.5 * powf(2, (-20 * t) + 10) + 1;
+        }
+    }else if (type == kCCBKeyframeEasingCircIn)
+    {
+        return 1 - sqrtf(1 - (t * t));
+    }
+    else if (type == kCCBKeyframeEasingCircOut)
+    {
+        return sqrtf((2 - t) * t);
+    }else if (type == kCCBKeyframeEasingCircInOut)
+    {
+        if(t < 0.5)
+        {
+            return 0.5 * (1 - sqrtf(1 - 4 * (t * t)));
+        }
+        else
+        {
+            return 0.5 * (sqrt(-((2 * t) - 3) * ((2 * t) - 1)) + 1);
+        }
     }
     
     NSAssert(NO, @"Invalid easing option");
@@ -223,7 +268,16 @@
             || type == kCCBKeyframeEasingBounceIn
             || type == kCCBKeyframeEasingBounceInOut
             || type == kCCBKeyframeEasingBackIn
-            || type == kCCBKeyframeEasingBackInOut);
+            || type == kCCBKeyframeEasingBackInOut
+            || type == kCCBKeyframeEasingSinIn
+            || type == kCCBKeyframeEasingSinOut
+            || type == kCCBKeyframeEasingSinInOut
+            || type == kCCBKeyframeEasingExpoIn
+            || type ==kCCBKeyframeEasingExpoOut
+            || type == kCCBKeyframeEasingExpoInOut
+            || type == kCCBKeyframeEasingCircIn
+            || type == kCCBKeyframeEasingCircOut
+            || type == kCCBKeyframeEasingCircInOut);
 }
 
 - (BOOL) hasEaseOut
@@ -235,7 +289,16 @@
             || type == kCCBKeyframeEasingBounceOut
             || type == kCCBKeyframeEasingBounceInOut
             || type == kCCBKeyframeEasingBackOut
-            || type == kCCBKeyframeEasingBackInOut);
+            || type == kCCBKeyframeEasingBackInOut
+            || type == kCCBKeyframeEasingSinIn
+            || type == kCCBKeyframeEasingSinOut
+            || type == kCCBKeyframeEasingSinInOut
+            || type == kCCBKeyframeEasingExpoIn
+            || type ==kCCBKeyframeEasingExpoOut
+            || type == kCCBKeyframeEasingExpoInOut
+            || type == kCCBKeyframeEasingCircIn
+            || type == kCCBKeyframeEasingCircOut
+            || type == kCCBKeyframeEasingCircInOut);
 }
 
 - (BOOL) hasOptions

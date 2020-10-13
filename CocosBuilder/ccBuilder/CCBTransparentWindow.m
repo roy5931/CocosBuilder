@@ -31,14 +31,14 @@
  provides a mechanism for controlling how objects of this class are created.
  */
 - (id)initWithContentRect:(NSRect)contentRect
-                styleMask:(NSUInteger)aStyle
+                styleMask:(NSWindowStyleMask)aStyle
                   backing:(NSBackingStoreType)bufferingType
                     defer:(BOOL)flag {
     // Using NSBorderlessWindowMask results in a window without a title bar.
-    self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+    self = [super initWithContentRect:contentRect styleMask:NSWindowStyleMaskBorderless backing:NSBackingStoreBuffered defer:NO];
     if (self != nil) {
         // Start with no transparency for all drawing into the window
-        [self setAlphaValue:1.0];
+        [self setAlphaValue:0.0];
         // Turn off opacity so that the parts of the window that are not drawn into are transparent.
         [self setOpaque:NO];
     }
@@ -47,7 +47,7 @@
 
 - (id)initWithContentRect:(NSRect)contentRect
 {
-    return [self initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+    return [self initWithContentRect:contentRect styleMask:NSWindowStyleMaskBorderless backing:NSBackingStoreBuffered defer:NO];
 }
 
 - (BOOL)canBecomeKeyWindow {

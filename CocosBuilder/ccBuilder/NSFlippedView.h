@@ -31,4 +31,5 @@
     
 }
 
+- (void)keyDown:(NSEvent *)theEvent;
 @end

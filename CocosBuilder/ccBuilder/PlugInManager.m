@@ -176,6 +176,7 @@
     
     Class editorClass = NSClassFromString(plugin.nodeEditorClassName);
     
+    CCMenu*menu = [[[CCMenu alloc] init]autorelease];
     CCNode* node = [[[editorClass alloc] init] autorelease];
     [node setUserObject: [NodeInfo nodeInfoWithPlugIn:plugin]];
     
