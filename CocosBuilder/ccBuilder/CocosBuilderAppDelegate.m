@@ -153,8 +153,9 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayStats:NO];
-	[director setProjection:kCCDirectorProjection2D];
-    //[cocosView openGLContext];
+//	[director setProjection:kCCDirectorProjection2D];
+//    [cocosView openGLContext];
+//    [cocosView prepareOpenGL];
     
 	[director setView:cocosView];
     
@@ -167,14 +168,17 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 	//[window setAcceptsMouseMovedEvents:YES];
 	
 	[director runWithScene:[CocosScene sceneWithAppDelegate:self]];
+    
+    [CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 	
-	NSAssert( [NSThread currentThread] == [[CCDirector sharedDirector] runningThread], @"cocos2d shall run on the Main Thread. Compile CocosBuilder with CC_DIRECTOR_MAC_THREAD=2");
+//	NSAssert( [NSThread currentThread] == [[CCDirector sharedDirector] runningThread], @"cocos2d shall run on the Main Thread. Compile CocosBuilder with CC_DIRECTOR_MAC_THREAD=2");
 }
 
 - (void) setupSequenceHandler
 {
     sequenceHandler = [[SequencerHandler alloc] initWithOutlineView:outlineHierarchy];
     sequenceHandler.scrubberSelectionView = scrubberSelectionView;
+    sequenceHandler.timelineView = timelineView;
     sequenceHandler.timeDisplay = timeDisplay;
     sequenceHandler.timeScaleSlider = timeScaleSlider;
     sequenceHandler.scroller = timelineScroller;
@@ -228,9 +232,26 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     // Setup preview
     previewViewOwner = [[ResourceManagerPreviewView alloc] init];
     
+<<<<<<< HEAD
     NSArray* topLevelObjs = NULL;
     [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
     
+=======
+    //wangxi
+    /*
+    NSArray* topLevelObjs = NULL;
+    [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
+    */
+    NSNib* aNib = [[NSNib alloc] initWithNibNamed:@"ResourceManagerPreviewView" bundle:[NSBundle mainBundle]];
+    NSArray* topLevelObjs = nil;
+    if (![aNib instantiateNibWithOwner:previewViewOwner topLevelObjects:&topLevelObjs])
+    {
+        NSLog(@"Warning! Could not load ResourceManagerPreviewView nib file.");
+        return;
+    }
+    [aNib release];
+    [topLevelObjs makeObjectsPerformSelector:@selector(release)];
+>>>>>>> master
     for (id obj in topLevelObjs)
     {
         if ([obj isKindOfClass:[NSView class]])
@@ -328,7 +349,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     [self setupToolbar];
 
     [self setupResourceManager];
-    [self setupGUIWindow];
+//    [self setupGUIWindow];
     
     [self setupPlayerConnection];
     
@@ -360,7 +381,11 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg
 {
-    NSAlert* alert = [NSAlert alertWithMessageText:title defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",msg];
+    NSAlert *alert = [[[NSAlert alloc]init]autorelease];
+    alert.messageText = title;
+    alert.informativeText = [NSString stringWithFormat:@"%@",msg];
+    [alert addButtonWithTitle:@"OK"];
+//    NSAlert* alert = [NSAlert alertWithMessageText:title defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",msg];
     [alert runModal];
 }
 
@@ -442,19 +467,25 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     
     if (doc.isDirty)
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Do you want to save the changes you made in the document “Untitled”?" defaultButton:@"Save" alternateButton:@"Cancel" otherButton:@"Don’t Save" informativeTextWithFormat:@"Your changes will be lost if you don’t save them."];
+        NSAlert *alert = [[[NSAlert alloc]init]autorelease];
+        alert.messageText = @"Do you want to save the changes you made in the document “Untitled”?";
+        alert.informativeText = @"Your changes will be lost if you don’t save them.";
+        [alert addButtonWithTitle:@"Save"];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert addButtonWithTitle:@"Don’t Save"];
+//        NSAlert* alert = [NSAlert alertWithMessageText:@"Do you want to save the changes you made in the document “Untitled”?" defaultButton:@"Save" alternateButton:@"Cancel" otherButton:@"Don’t Save" informativeTextWithFormat:@"Your changes will be lost if you don’t save them."];
         NSInteger result = [alert runModal];
         
-        if (result == NSAlertDefaultReturn)
+        if (result == NSAlertFirstButtonReturn)
         {
             [self saveDocument:self];
             return YES;
         }
-        else if (result == NSAlertAlternateReturn)
+        else if (result == NSAlertSecondButtonReturn)
         {
             return NO;
         }
-        else if (result == NSAlertOtherReturn)
+        else if (result == NSAlertThirdButtonReturn)
         {
             return YES;
         }
@@ -560,6 +591,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 - (void) windowDidResize:(NSNotification *)notification
 {
     [sequenceHandler updateScroller];
+    [[CocosScene cocosScene] forceUpdateSelection];
 }
 
 
@@ -570,6 +602,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 - (void) refreshProperty:(NSString*) name
 {
     if (!self.selectedNode) return;
+    self.updateSelectedNodes = NULL;
     
     InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
     if (inspectorValue)
@@ -578,8 +611,31 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     }
 }
 
+- (void) focusProperty:(NSString *) name
+{
+    if (!self.selectedNode) return;
+    self.updateSelectedNodes = NULL;
+    
+    InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
+    if (inspectorValue)
+    {
+        if ([inspectorValue respondsToSelector:@selector(setBoolean:)])
+        {
+            [inspectorValue setBoolean:![inspectorValue boolean]];
+        }
+        else
+        {
+            if (inspectorValue.firstTextField)
+                [inspectorValue.firstTextField becomeFirstResponder];
+            else
+                [inspectorValue.view becomeFirstResponder];
+        }
+    }
+}
+
 
 static InspectorValue* lastInspectorValue;
+static NSTextField* lastField = nil;
 static BOOL hideAllToNextSeparator;
 
 - (int) addInspectorPropertyOfType:(NSString*)type name:(NSString*)prop displayName:(NSString*)displayName extra:(NSString*)e readOnly:(BOOL)readOnly affectsProps:(NSArray*)affectsProps atOffset:(int)offset
@@ -590,6 +646,7 @@ static BOOL hideAllToNextSeparator;
     InspectorValue* inspectorValue = [InspectorValue inspectorOfType:type withSelection:self.selectedNode andPropertyName:prop andDisplayName:displayName andExtra:e];
     lastInspectorValue.inspectorValueBelow = inspectorValue;
     lastInspectorValue = inspectorValue;
+    
     inspectorValue.readOnly = readOnly;
     inspectorValue.rootNode = (self.selectedNode == [CocosScene cocosScene].rootNode);
     
@@ -606,9 +663,15 @@ static BOOL hideAllToNextSeparator;
     
     // Load it's associated view
     [NSBundle loadNibNamed:inspectorNibName owner:inspectorValue];
+//    [[NSBundle bundleForClass:] loadNibNamed:inspectorNibName owner:inspectorValue topLevelObjects:nil];
     NSView* view = inspectorValue.view;
     
     [inspectorValue willBeAdded];
+    
+    if (lastField&&inspectorValue.firstTextField)
+        lastField.nextKeyView = inspectorValue.firstTextField;
+    if (lastInspectorValue.lastTextField)
+        lastField = lastInspectorValue.lastTextField;
     
     //if its a separator, check to see if it isExpanded, if not set all of the next non-separator InspectorValues to hidden and don't touch the offset
     if ([inspectorValue isKindOfClass:[InspectorSeparator class]]) {
@@ -1258,8 +1321,10 @@ static BOOL hideAllToNextSeparator;
     // Setup links to directories
     for (NSString* dir in [projectSettings absoluteResourcePaths])
     {
-        [resManager addDirectory:dir];
+        [resManager addDirectory:dir watch:NO];
     }
+    //luteng 解决打开工程很慢的问题 updatedWatchedPaths在addDirectory中执行会浪费大量时间，放到最后单独执行
+    [resManager updatedWatchedPaths];
     [[ResourceManager sharedManager] setActiveDirectories:[projectSettings absoluteResourcePaths]];
 }
 
@@ -1640,6 +1705,7 @@ static BOOL hideAllToNextSeparator;
     NSTabViewItem* item = [self tabViewItemFromDoc:currentDocument];
     [tabBar setIsEdited:YES ForTabViewItem:item];
     [self updateDirtyMark];
+    [[CocosScene cocosScene] forceUpdateSelection];
 }
 
 - (void) saveUndoState
@@ -2210,14 +2276,20 @@ static BOOL hideAllToNextSeparator;
     // Check if there are unsaved documents
     if ([self hasDirtyDocument])
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Publish Project" defaultButton:@"Save All" alternateButton:@"Cancel" otherButton:@"Don't Save" informativeTextWithFormat:@"There are unsaved documents. Do you want to save before publishing?"];
-        [alert setAlertStyle:NSWarningAlertStyle];
+        NSAlert *alert = [[[NSAlert alloc]init]autorelease];
+        alert.messageText = @"Publish Project";
+        alert.informativeText = @"There are unsaved documents. Do you want to save before publishing?";
+        [alert addButtonWithTitle:@"Save All"];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert addButtonWithTitle:@"Don’t Save"];
+//        NSAlert* alert = [NSAlert alertWithMessageText:@"Publish Project" defaultButton:@"Save All" alternateButton:@"Cancel" otherButton:@"Don't Save" informativeTextWithFormat:@"There are unsaved documents. Do you want to save before publishing?"];
+        [alert setAlertStyle:NSAlertStyleWarning];
         NSInteger result = [alert runModal];
         switch (result) {
-            case NSAlertDefaultReturn:
+            case NSAlertFirstButtonReturn:
                 [self saveAllDocuments:nil];
                 // Falling through to publish
-            case NSAlertOtherReturn:
+            case NSAlertThirdButtonReturn:
                 // Open progress window and publish
                 [publisher publish];
                 [self modalStatusWindowStartWithTitle:@"Publishing"];
@@ -2835,6 +2907,19 @@ static BOOL hideAllToNextSeparator;
     
     if ([sc selectedSegment] == 1) {
         [splitHorizontalView toggleBottomView:[sc isSelectedForSegment:1]];
+    }
+    
+    if ([sc selectedSegment] == 3) {
+        if (window.appearance.name == NSAppearanceNameAqua) {
+            if (@available(macOS 10.14, *)) {
+                window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameDarkAqua];
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        else {
+            window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+        }
     }
 }
 
@@ -3513,6 +3598,13 @@ static BOOL hideAllToNextSeparator;
     [cs.notesLayer addNote];
 }
 
+- (IBAction)menuCancel:(id)sender
+{
+    if (!self.selectedNode) return;
+    NSArray *nodes = [NSArray arrayWithArray:self.selectedNodes];
+    [self setSelectedNodes:nodes];
+}
+
 - (NSString*) keyframePropNameFromTag:(int)tag
 {
     if (tag == 0) return @"visible";
@@ -3523,6 +3615,12 @@ static BOOL hideAllToNextSeparator;
     else if (tag == 5) return @"opacity";
     else if (tag == 6) return @"color";
     else return NULL;
+}
+
+- (IBAction)menuSetProperty:(id)sender
+{
+    int tag = [sender tag];
+    [self focusProperty:[self keyframePropNameFromTag:tag]];
 }
 
 - (IBAction)menuAddKeyframe:(id)sender
@@ -3710,10 +3808,15 @@ static BOOL hideAllToNextSeparator;
 {
     if ([self hasDirtyDocument])
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Quit CocosBuilder" defaultButton:@"Cancel" alternateButton:@"Quit" otherButton:NULL informativeTextWithFormat:@"There are unsaved documents. If you quit now you will lose any changes you have made."];
-        [alert setAlertStyle:NSWarningAlertStyle];
+        NSAlert *alert = [[[NSAlert alloc]init]autorelease];
+        alert.messageText = @"Quit CocosBuilder";
+        alert.informativeText = @"There are unsaved documents. If you quit now you will lose any changes you have made.";
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert addButtonWithTitle:@"Quit"];
+//        NSAlert* alert = [NSAlert alertWithMessageText:@"Quit CocosBuilder" defaultButton:@"Cancel" alternateButton:@"Quit" otherButton:NULL informativeTextWithFormat:@"There are unsaved documents. If you quit now you will lose any changes you have made."];
+        [alert setAlertStyle:NSAlertStyleWarning];
         NSInteger result = [alert runModal];
-        if (result == NSAlertDefaultReturn) return NO;
+        if (result == NSAlertFirstButtonReturn) return NO;
     }
     return YES;
 }

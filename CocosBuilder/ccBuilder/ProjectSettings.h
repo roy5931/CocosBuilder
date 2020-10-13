@@ -99,6 +99,9 @@
     BOOL deviceOrientationLandscapeRight;
     int resourceAutoScaleFactor;
     
+    /* Jennal Added */
+    BOOL publishLuaScript;
+    
     NSString* versionStr;
     BOOL needRepublish;
 }
@@ -151,6 +154,9 @@
 @property (nonatomic, assign) int resourceAutoScaleFactor;
 
 @property (nonatomic, readonly) NSDictionary* generatedSpriteSheets;
+
+/* Jennal Added */
+@property (nonatomic, assign) BOOL publishLuaScript;
 
 @property (nonatomic,readonly) NSDictionary* breakpoints;
 @property (nonatomic, copy) NSString* versionStr;

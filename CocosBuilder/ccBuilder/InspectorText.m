@@ -26,6 +26,20 @@
 
 @implementation InspectorText
 
+//- (void) awakeFromNib
+//{
+//    [self.text
+//    NSForegroundColorAttributeName : NSColor.controlTextColor
+//}
+
+- (void) willBeAdded
+{
+    if (@available(macOS 10.14, *)) {
+        textView.usesAdaptiveColorMappingForDarkAppearance = true;
+    } else {
+        // Fallback on earlier versions - do nothing
+    }
+}
 - (void) setText:(NSAttributedString *)text
 {
     NSString* str = [text string];

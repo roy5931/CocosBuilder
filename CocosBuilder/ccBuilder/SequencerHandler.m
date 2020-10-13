@@ -36,6 +36,7 @@
 #import "SequencerCell.h"
 #import "SequencerSequence.h"
 #import "SequencerScrubberSelectionView.h"
+#import "SequencerTimelineView.h"
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
 #import "SequencerNodeProperty.h"
@@ -53,6 +54,7 @@ static SequencerHandler* sharedSequencerHandler;
 @synthesize dragAndDropEnabled;
 @synthesize currentSequence;
 @synthesize scrubberSelectionView;
+@synthesize timelineView;
 @synthesize timeDisplay;
 @synthesize outlineHierarchy;
 @synthesize timeScaleSlider;
@@ -625,6 +627,8 @@ static SequencerHandler* sharedSequencerHandler;
 - (void) redrawTimeline:(BOOL) reload
 {
     [scrubberSelectionView setNeedsDisplay:YES];
+    [timelineView setNeedsDisplay:YES];
+    [outlineHierarchy setNeedsDisplay:YES];
     NSString* displayTime = [currentSequence currentDisplayTime];
     if (!displayTime) displayTime = @"00:00:00";
     [timeDisplay setStringValue:displayTime];
@@ -883,6 +887,7 @@ static SequencerHandler* sharedSequencerHandler;
 {
     self.currentSequence = NULL;
     self.scrubberSelectionView = NULL;
+    self.timelineView = NULL;
     self.timeDisplay = NULL;
     //self.sequences = NULL;
     

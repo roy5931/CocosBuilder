@@ -324,11 +324,17 @@ static CocosScene* sharedCocosScene;
     borderDevice.scale = zoom;
     
     stageZoom = zoom;
+    forceUpdateSelection = YES;
 }
 
 - (float) stageZoom
 {
     return stageZoom;
+}
+
+- (void) forceUpdateSelection
+{
+    forceUpdateSelection = YES;
 }
 
 #pragma mark Extra properties
@@ -378,6 +384,16 @@ static CocosScene* sharedCocosScene;
 - (void) updateSelection
 {
     NSArray* nodes = appDelegate.selectedNodes;
+    NSSet *set1 = [NSSet setWithArray:nodes];
+    NSSet *set2 = [NSSet setWithArray:appDelegate.updateSelectedNodes];
+
+    if (!forceUpdateSelection && [set1 isEqualToSet:set2]) {
+        return;
+    }
+    else {
+        forceUpdateSelection = NO;
+        appDelegate.updateSelectedNodes = [NSArray arrayWithArray:nodes];
+    }
     
     // Clear selection
     [selectionLayer removeAllChildrenWithCleanup:YES];
@@ -952,7 +968,7 @@ static CocosScene* sharedCocosScene;
         CGPoint delta = ccpSub(pos, mouseDownPos);
         scrollOffset = ccpAdd(panningStartScrollOffset, delta);
     }
-    
+    forceUpdateSelection = YES;
     return YES;
 }
 
@@ -1139,6 +1155,7 @@ static CocosScene* sharedCocosScene;
     
     scrollOffset.x = scrollOffset.x+dx;
     scrollOffset.y = scrollOffset.y+dy;
+    forceUpdateSelection = YES;
 }
 
 #pragma mark Updates every frame
@@ -1243,6 +1260,7 @@ static CocosScene* sharedCocosScene;
         self.mouseEnabled = YES;
         
         stageZoom = 1;
+        forceUpdateSelection = NO;
         
         [self nextFrame:0];
 	}

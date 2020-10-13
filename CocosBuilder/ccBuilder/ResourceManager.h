@@ -26,7 +26,8 @@
 #import "SCEvents.h"
 #import "SCEvent.h"
 
-#define kCCBMaxTrackedDirectories 50
+//nuannuan
+#define kCCBMaxTrackedDirectories 65535
 
 enum
 {
@@ -145,8 +146,10 @@ enum
 @property (nonatomic,readonly) NSArray* systemFontList;
 
 - (void) addDirectory:(NSString*)dir;
+- (void) addDirectory:(NSString*)dir watch:(BOOL)watch;
 - (void) removeDirectory:(NSString*)dir;
 - (void) removeAllDirectories;
+- (void) updatedWatchedPaths;
 
 - (void) setActiveDirectory:(NSString *)dir;
 

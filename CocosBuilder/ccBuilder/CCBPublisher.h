@@ -38,6 +38,7 @@ enum {
     ProjectSettings* projectSettings;
     CCBWarnings* warnings;
     NSString* outputDir;
+    NSString* luaDir;
     NSArray* copyExtensions;
     NSString* publishFormat;
     BOOL runAfterPublishing;

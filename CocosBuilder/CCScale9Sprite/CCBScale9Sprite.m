@@ -31,11 +31,12 @@
 
 - (float) resolutionScale
 {
-    CCBDocument* currentDocument = [CocosBuilderAppDelegate appDelegate].currentDocument;
-    
-    ResolutionSetting* resolution = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
-    
-    return resolution.scale;
+//    CCBDocument* currentDocument = [CocosBuilderAppDelegate appDelegate].currentDocument;
+//
+//    ResolutionSetting* resolution = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
+//
+//    return resolution.scale;
+    return 1;
 }
 
 - (void) setInsetBottom:(float)insetBottom

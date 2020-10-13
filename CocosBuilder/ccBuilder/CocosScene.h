@@ -105,6 +105,7 @@ enum {
     
     int stageBorderType;
     float stageZoom;
+    bool forceUpdateSelection;
     
     int currentTool;
 }
@@ -137,6 +138,8 @@ enum {
 
 - (void) setStageZoom:(float) zoom;
 - (float) stageZoom;
+
+- (void)forceUpdateSelection;
 
 - (void) replaceRootNodeWith:(CCNode*)node;
 

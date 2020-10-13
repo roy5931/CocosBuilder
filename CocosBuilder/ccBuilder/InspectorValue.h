@@ -44,6 +44,9 @@
     BOOL inPopoverWindow;
     
     NSString* textFieldOriginalValue;
+    
+    IBOutlet NSTextField *firstTextField;
+    IBOutlet NSTextField *lastTextField;
 }
 
 @property (nonatomic,readonly) NSString* displayName;
@@ -55,6 +58,8 @@
 @property (nonatomic,retain) InspectorValue* inspectorValueBelow;
 @property (nonatomic,assign) BOOL inPopoverWindow;
 @property (nonatomic,retain) NSString* textFieldOriginalValue;
+@property (nonatomic,assign) NSTextField *firstTextField;
+@property (nonatomic,assign) NSTextField *lastTextField;
 
 + (id) inspectorOfType:(NSString*) t withSelection:(CCNode*)s andPropertyName:(NSString*)pn andDisplayName:(NSString*) dn andExtra:(NSString*)e;
 

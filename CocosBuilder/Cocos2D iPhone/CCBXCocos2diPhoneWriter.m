@@ -715,7 +715,14 @@
 
 - (void) transformStringCache
 {
-    NSArray* stringCacheSorted = [stringCacheLookup keysSortedByValueUsingSelector:@selector(compare:)];
+//    NSArray* stringCacheSorted = [stringCacheLookup keysSortedByValueUsingSelector:@selector(compare:)];
+    NSArray *stringCacheSorted = [[stringCacheLookup allKeys] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSComparisonResult result = [[stringCacheLookup objectForKey:obj1] compare:[stringCacheLookup objectForKey:obj2]];
+        if (result == NSOrderedSame)
+        return [obj1 compare:obj2];
+        else
+        return result;
+    }];
     
     NSMutableArray* stringCacheSortedReverse = [NSMutableArray arrayWithCapacity:[stringCacheSorted count]];
     

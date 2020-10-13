@@ -231,6 +231,7 @@
     // Set the extra properties
     [node setExtraProp:[NSValue valueWithPoint:pos] forKey:prop];
     [node setExtraProp:[NSNumber numberWithInt:type] forKey:[NSString stringWithFormat:@"%@Type", prop]];
+    [[CocosScene cocosScene] forceUpdateSelection];
 }
 
 + (void) addPositionKeyframeForNode:(CCNode*)node

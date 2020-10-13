@@ -31,7 +31,7 @@
 {
     CGFloat r, g, b, a;
     
-    color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+//    color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
     
     [color getRed:&r green:&g blue:&b alpha:&a];
     

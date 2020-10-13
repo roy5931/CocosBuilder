@@ -161,7 +161,13 @@
     {
         // There are more than one active directory, make a list of directories at
         // the top level
-        for (RMDirectory* activeDir in rm.activeDirectories)
+        NSMutableArray *dirArray = [NSMutableArray arrayWithArray:rm.activeDirectories];
+        NSString *absolutePath = [ResourceManagerUtil absolutePathFromRelativePath: file];
+        NSString *path = [absolutePath stringByDeletingLastPathComponent];
+        RMDirectory* dir = [rm.directories objectForKey:path];
+        if (dir) [dirArray addObject:dir];
+        
+        for (RMDirectory* activeDir in dirArray)
         {
             NSString* itemName = [activeDir.dirPath lastPathComponent];
             
@@ -245,6 +251,35 @@
     }
     
     NSLog(@"WARNING! ResourceManagerUtil: No relative path");
+    return NULL;
+}
+
++ (NSString*) absolutePathFromRelativePath: (NSString*) path
+{
+    NSArray* activeDirs = [[ResourceManager sharedManager] activeDirectories];
+    
+    for (RMDirectory* dir in activeDirs)
+    {
+        NSString* base = dir.dirPath;
+        NSString *absolutePath = [base stringByAppendingPathComponent:path];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:absolutePath])
+        {
+            return absolutePath;
+        }
+    }
+    
+    for (RMDirectory* dir in activeDirs)
+    {
+        NSString* base = dir.dirPath;
+        if (([path hasSuffix:@".png"]||[path hasSuffix:@"jpg"])
+            && ([base hasSuffix:@"/i6"]||[base hasSuffix:@"/hd"]))
+        {
+            NSString *absolutePath = [base stringByAppendingPathComponent:path];
+            return absolutePath;
+        }
+    }
+    
+    NSLog(@"WARNING! ResourceManagerUtil: No absolute path");
     return NULL;
 }
 

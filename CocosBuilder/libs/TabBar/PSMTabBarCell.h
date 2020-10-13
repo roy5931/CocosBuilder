@@ -12,6 +12,7 @@
 
 
 @interface PSMTabBarCell : NSActionCell {
+    id                                      _controlView;
 	// sizing
 	NSRect									_frame;
 	NSSize									_stringSize;

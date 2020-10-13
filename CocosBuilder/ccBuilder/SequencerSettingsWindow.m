@@ -50,8 +50,13 @@
     else
     {
         // Display warning!
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Missing Timeline" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You need to have at least one timeline in your document."];
-        [alert beginSheetModalForWindow:[self window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
+        NSAlert *alert = [[[NSAlert alloc]init]autorelease];
+        alert.messageText = @"Missing Timeline";
+        alert.informativeText = @"You need to have at least one timeline in your document.";
+        [alert addButtonWithTitle:@"OK"];
+        [alert beginSheetModalForWindow:[self window] completionHandler:NULL];
+//        NSAlert* alert = [NSAlert alertWithMessageText:@"Missing Timeline" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You need to have at least one timeline in your document."];
+//        [alert beginSheetModalForWindow:[self window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
         
         return NO;
     }

@@ -35,6 +35,18 @@
 			<key>dontSetInEditor</key>
 			<true/>
 		</dict>
+        <dict>
+            <key>defaultSerialization</key>
+            <true/>
+            <key>default</key>
+            <true/>
+            <key>displayName</key>
+            <string>Is System Font</string>
+            <key>type</key>
+            <string>Check</string>
+            <key>name</key>
+            <string>isSystemFont</string>
+        </dict>
 		<dict>
 			<key>affectsProperties</key>
 			<array>
@@ -143,6 +155,130 @@
 			<key>name</key>
 			<string>string</string>
 		</dict>
+        <dict>
+            <key>displayName</key>
+            <string>Outline</string>
+            <key>type</key>
+            <string>SeparatorSub</string>
+        </dict>
+        <dict>
+            <key>defaultSerialization</key>
+            <false/>
+            <key>default</key>
+            <false/>
+            <key>displayName</key>
+            <string>Outline Enabled</string>
+            <key>type</key>
+            <string>Check</string>
+            <key>name</key>
+            <string>outlineEnabled</string>
+        </dict>
+        <dict>
+            <key>affectsProperties</key>
+            <array>
+                <string>contentSize</string>
+            </array>
+            <key>default</key>
+            <integer>0</integer>
+            <key>displayName</key>
+            <string>Outline Size</string>
+            <key>type</key>
+            <string>Byte</string>
+            <key>name</key>
+            <string>outlineSize</string>
+        </dict>
+        <dict>
+            <key>defaultSerialization</key>
+            <array>
+                <integer>0</integer>
+                <integer>0</integer>
+                <integer>0</integer>
+            </array>
+            <key>default</key>
+            <array>
+                <integer>0</integer>
+                <integer>0</integer>
+                <integer>0</integer>
+            </array>
+            <key>displayName</key>
+            <string>Outline Color</string>
+            <key>type</key>
+            <string>Color3</string>
+            <key>name</key>
+            <string>outlineColor</string>
+        </dict>
+        <dict>
+            <key>displayName</key>
+            <string>Shadow</string>
+            <key>type</key>
+            <string>SeparatorSub</string>
+        </dict>
+        <dict>
+            <key>defaultSerialization</key>
+            <false/>
+            <key>default</key>
+            <false/>
+            <key>displayName</key>
+            <string>Shadow Enabled</string>
+            <key>type</key>
+            <string>Check</string>
+            <key>name</key>
+            <string>shadowEnabled</string>
+        </dict>
+        <dict>
+            <key>defaultSerialization</key>
+            <array>
+                <integer>0</integer>
+                <integer>0</integer>
+                <integer>0</integer>
+            </array>
+            <key>default</key>
+            <array>
+                <integer>0</integer>
+                <integer>0</integer>
+                <integer>0</integer>
+            </array>
+            <key>displayName</key>
+            <string>Shadow Color</string>
+            <key>type</key>
+            <string>Color3</string>
+            <key>name</key>
+            <string>shadowColor</string>
+        </dict>
+        <dict>
+            <key>defaultSerialization</key>
+            <integer>0</integer>
+            <key>default</key>
+            <integer>0</integer>
+            <key>displayName</key>
+            <string>Shadow Blur</string>
+            <key>type</key>
+            <string>Byte</string>
+            <key>name</key>
+            <string>shadowBlur</string>
+        </dict>
+        <dict>
+            <key>affectsProperties</key>
+            <array>
+                <string>contentSize</string>
+            </array>
+            <key>defaultSerialization</key>
+            <array>
+                <integer>2</integer>
+                <integer>-2</integer>
+            </array>
+            <key>default</key>
+            <array>
+                <integer>2</integer>
+                <integer>-2</integer>
+            </array>
+            <key>displayName</key>
+            <string>Shadow Offset</string>
+            <key>type</key>
+            <string>Size</string>
+            <key>name</key>
+            <string>shadowOffset</string>
+        </dict>
 	</array>
 </dict>
 </plist>

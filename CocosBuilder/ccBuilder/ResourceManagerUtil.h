@@ -32,6 +32,8 @@
 
 + (NSString*) relativePathFromAbsolutePath: (NSString*) path;
 
++ (NSString*) absolutePathFromRelativePath: (NSString*) path;
+
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup;
 
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup forceMarker:(BOOL) forceMarker;

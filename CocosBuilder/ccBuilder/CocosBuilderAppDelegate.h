@@ -91,6 +91,7 @@ enum {
 @class CCBWarnings;
 @class SequencerHandler;
 @class SequencerScrubberSelectionView;
+@class SequencerTimelineView;
 @class MainWindow;
 @class PlayerConsoleWindow;
 @class HelpWindow;
@@ -138,6 +139,7 @@ enum {
     SequencerHandler* sequenceHandler;
     IBOutlet NSOutlineView* outlineHierarchy;
     IBOutlet SequencerScrubberSelectionView* scrubberSelectionView;
+    IBOutlet SequencerTimelineView* timelineView;
     IBOutlet NSTextField* timeDisplay;
     IBOutlet NSSlider* timeScaleSlider;
     IBOutlet NSScroller* timelineScroller;
@@ -254,6 +256,7 @@ enum {
 @property (nonatomic,readonly) CCNode* selectedNode;
 
 @property (nonatomic,retain) NSArray* selectedNodes;
+@property (nonatomic,retain) NSArray* updateSelectedNodes;
 @property (nonatomic,readonly) NSMutableArray* loadedSelectedNodes;
 
 @property (nonatomic,assign) BOOL showGuides;

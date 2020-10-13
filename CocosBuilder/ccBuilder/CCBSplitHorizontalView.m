@@ -25,6 +25,7 @@
 #import "CCBSplitHorizontalView.h"
 #import "MainWindow.h"
 #import "CocosBuilderAppDelegate.h"
+#import "CocosScene.h"
 
 @interface CCBSplitHorizontalView(Private)
 
@@ -125,6 +126,7 @@
     } else {
         [[CocosBuilderAppDelegate appDelegate].panelVisibilityControl setSelected:YES forSegment:1];
     }
+    [[CocosScene cocosScene] forceUpdateSelection];
 }
 
 - (void)splitView:(NSSplitView *)sender resizeSubviewsWithOldSize:(NSSize)oldSize
@@ -141,7 +143,8 @@
     
     // keep timeline view intact
     NSSize newSize = sender.frame.size;
-    float timeLineHeight = bottomView.frame.size.height;
+    float scale_timeline = bottomView.frame.size.height/(oldSize.height - [sender dividerThickness]);
+    float timeLineHeight = scale_timeline * (newSize.height-[sender dividerThickness]);
     float cocosViewHeight = newSize.height-timeLineHeight-[sender dividerThickness];
     if (cocosViewHeight<minCocosSize) {
         cocosViewHeight = minCocosSize;
