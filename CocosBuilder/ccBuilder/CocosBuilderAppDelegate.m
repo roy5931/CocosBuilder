@@ -232,11 +232,6 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     // Setup preview
     previewViewOwner = [[ResourceManagerPreviewView alloc] init];
     
-<<<<<<< HEAD
-    NSArray* topLevelObjs = NULL;
-    [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
-    
-=======
     //wangxi
     /*
     NSArray* topLevelObjs = NULL;
@@ -251,7 +246,6 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     }
     [aNib release];
     [topLevelObjs makeObjectsPerformSelector:@selector(release)];
->>>>>>> master
     for (id obj in topLevelObjs)
     {
         if ([obj isKindOfClass:[NSView class]])
