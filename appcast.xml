@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+   <channel>
+      <title>CocosBuilder's Changelog</title>
+      <link>https://raw.githubusercontent.com/roy5931/CocosBuilder/develop/appcast.xml</link>
+      <description>适配macos10.15.</description>
+      <language>en</language>
+         <item>
+            <title>Version 3.2.3</title>
+        <sparkle:releaseNotesLink>
+            https://raw.githubusercontent.com/roy5931/CocosBuilder/develop/README.md
+        </sparkle:releaseNotesLink>
+            <pubDate>Thu, 19 May 2011 19:20:11 +0000</pubDate>
+            <enclosure url="https://github.com/roy5931/CocosBuilder/releases/download/v3.2.3/CocosBuilder.zip" sparkle:version="3.2.3" length="18214633" type="application/octet-stream" sparkle:dsaSignature="NanrL07KzV55f0sxVkuN8AEFnMd3zdin/Lt+4YU1TFvi9o2oIHdwnGaHPuwK+JWtZugdmhqykuFsRT+cxQ90Cg==" />
+         </item>
+   </channel>
+</rss>
